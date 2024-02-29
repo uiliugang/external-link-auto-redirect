@@ -1,33 +1,35 @@
 // ==UserScript==
-// @name         外链自动跳转
+// @name         External Link Auto Redirect
+// @name:zh-CN   外链自动重定向
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  跳转嘎嘎快,适配语雀,少数派,简书,掘金,CSDN,InfoQ,知乎等大部分网站,打开外链时,自动跳转到目标网站.
+// @version      0.2
+// @description  redirect to the real URL quickly, 快速重定向
 // @author       uiliugang
 // @run-at       document-start
 // @match        *://*/*
+// @license      MIT
 // ==/UserScript==
 
 (function() {
     'use strict';
     let url = window.location.href;
-    // 经本人观察, 主流网站的重定向页面会包含?, 如果不包含?, 默认不是重定向页面, 不跳转.
-    if(url.indexOf('?') == -1) return;
+    if (!url.includes('?')) return;
     let processedUrl = processUrl(url);
-    if(processedUrl !== url){
+    if (processedUrl) {
         window.location.replace(processedUrl);
     }
+
     function processUrl(redirectURL) {
-        let linkSections;
-let redirectIdentifier = ['?target=', '?to=', '?ac=2&url=', '?url=','?remoteUrl=','?redirect=','?u=','?goto=','?link='];
-        for (let i = 0; i < redirectIdentifier.length; i++) {
-            let identifier = redirectIdentifier[i];
-            if (redirectURL.indexOf(identifier) !== -1) {
-                linkSections = redirectURL.split(identifier);
-                return decodeURIComponent(linkSections[1]);
+        const redirectRegex = /[?&](target|to|ac=2&url|url|remoteUrl|redirect|u|goto|link)=([^&]+)/i;
+        const matches = redirectURL.match(redirectRegex);
+        if (matches && matches[2]) {
+            try {
+                return decodeURIComponent(matches[2]);
+            } catch (e) {
+                console.error('Error decoding URL:', e);
+                return redirectURL;
             }
         }
-        return redirectURL;
+        return null;
     }
 })();
-
