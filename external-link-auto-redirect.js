@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         External Link Auto Redirect
-// @name:zh-CN   外链自动重定向
+// @name         External Link Auto Redirect(Direct Link)
+// @name:zh-CN   外链自动重定向（默认直链）
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  redirect to the real URL directly when clicking on a link that contains a redirect URL
