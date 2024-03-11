@@ -17,7 +17,7 @@
     'use strict';
 
     const redirectRegex = /^https?:\/\/.*\?.*https?/;
-    const videoExtensions = ['.mp4', '.m3u8', '.avi', '.mov', '.wmv', '.mkv', '.flv', '.webm', '.mpeg', '.mpg', '.mp2v', '.m4v', '.svi', '.asx', '.wmv', '.wmx', '.m4p', '.m4b', '.mxf', '.roq', '.nsv', '.flv', '.mpe?g', '.mp3v', '.m1v', '.m2v', '.vob', '.ifo', '.dat', '.divx', '.cpk', '.dirac', '.drc', '.mj2', '.mjv', '.mod', '.tod', '.rec', '.uvh', '.uvu', '.qt', '.rm', '.ram', '.rpm', '.smil', '.ice', '.gifv', '.nsv', '.3ivx', '.3gpp', '.f4v', '.f4p', '.f4a', '.f4b', '.mxf', '.roq', '.nsv', '.flv', '.m4v', '.avi', '.dat', '.divx', '.cpk', '.dirac', '.drc', '.mj2', '.mjp2', '.mjv', '.mod', '.tod', '.rec', 'uvh', 'uvu', 'qt', 'mov', 'movie', 'rm', 'ra', 'ram', 'rpm', 'smil', 'ice', 'mpe?g', 'mp2v', 'mp3v', 'm4v', 'svi', '.asx', 'wmv', 'wmx', 'wm', 'asf', 'amv', 'mpv', 'm1v', 'm2v', 'vob', '.ifo'];
+    const excludedExtensions = ['.m3u8', '.flv', '.ts'];
 
     function processUrl(redirectURL) {
         const matches = redirectURL.match(redirectRegex);
@@ -26,18 +26,18 @@
             let index = redirectURL.substring(4).indexOf("http")+3;
             let realUrl = decodeURIComponent(redirectURL.substring(index + 1));
             console.log(`Decoded URL: ${realUrl}`);
-            if (isValidUrlAndNotVideo(realUrl)) {
+            if (isValidUrlAndNotExclude(realUrl)) {
                 return realUrl;
             }
         }
         return null;
     }
 
-    function isValidUrlAndNotVideo(string) {
+    function isValidUrlAndNotExclude(string) {
         try {
             const url = new URL(string);
             const pathname = url.pathname;
-            for (const ext of videoExtensions) {
+            for (const ext of excludedExtensions) {
                 if (pathname.endsWith(ext)) {
                     return false;
                 }
@@ -48,42 +48,18 @@
         }
     }
 
-    function handleClick(e) {
-      let url = '';
-        let processedUrl = '';
-        // 检查点击的元素是否具有 href 属性
-        if (e.target && e.target.href) {
-            url = e.target.href;
-            processedUrl = processUrl(url);
+    document.addEventListener('click', function(e) {
+        const element = e.target.closest('a[href]');
+        if (element) {
+            const processedUrl = processUrl(element.href);
             if (processedUrl) {
                 e.preventDefault();
                 window.open(processedUrl, '_blank');
             }
         }
-
-        // 如果点击的元素没有 href 属性，则检查其父元素
-        else if (e.target.parentElement && e.target.parentElement.href) {
-            url = e.target.parentElement.href;
-            processedUrl = processUrl(url);
-            if (processedUrl) {
-                e.preventDefault();
-                window.open(processedUrl, '_blank');
-            }
-        }
-        // 如果点击的元素或其父元素都没有 href 属性，则检查其祖先元素
-        else if (e.target.parentElement && e.target.parentElement.parentElement && e.target.parentElement.parentElement.href) {
-            url = e.target.parentElement.parentElement.href;
-            processedUrl = processUrl(url);
-            if (processedUrl) {
-                e.preventDefault();
-                window.open(processedUrl, '_blank');
-            }
-        }
-        console.log(`Original URL: ${url}`);
+        console.log(`Original URL: ${element.href}`);
         console.log(`Processed URL: ${processedUrl}`);
-    }
-
-    document.addEventListener('click', handleClick);
+    });
 
     let processedUrl = processUrl(window.location.href);
     if (processedUrl) {
