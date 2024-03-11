@@ -2,7 +2,7 @@
 // @name         External Link Auto Redirect(Direct Link)
 // @name:zh-CN   外链自动重定向（默认直链）
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  redirect to the real URL directly when clicking on a link that contains a redirect URL
 // @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL
 // @author       uiliugang
