@@ -2,7 +2,7 @@
 // @name         External Link Auto Redirect(Direct Link)
 // @name:zh-CN   外链自动重定向（默认直链）
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  redirect to the real URL directly when clicking on a link that contains a redirect URL
 // @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL
 // @author       uiliugang
@@ -25,7 +25,7 @@
         if (matches) {
             let index = redirectURL.substring(4).indexOf("http")+3;
             let realUrl = decodeURIComponent(redirectURL.substring(index + 1));
-            console.log(`Decoded URL: ${realUrl}`);
+            //console.log(`Decoded URL: ${realUrl}`);
             if (isValidUrlAndNotExclude(realUrl)) {
                 return realUrl;
             }
@@ -38,7 +38,7 @@
             const url = new URL(string);
             const pathname = url.pathname;
             for (const ext of excludedExtensions) {
-                if (pathname.endsWith(ext)) {
+                if (pathname.includes(ext)) {
                     return false;
                 }
             }
@@ -57,8 +57,8 @@
                 window.open(processedUrl, '_blank');
             }
         }
-        console.log(`Original URL: ${element.href}`);
-        console.log(`Processed URL: ${processedUrl}`);
+        //console.log(`Original URL: ${element.href}`);
+        //console.log(`Processed URL: ${processedUrl}`);
     });
 
     let processedUrl = processUrl(window.location.href);
