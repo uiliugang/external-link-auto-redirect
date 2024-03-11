@@ -13,7 +13,7 @@
 理论上适配绝大多数页面,以下部分页面可以提供测试 有问题请反馈.
 
 - https://www.yuque.com/wukong-zorrm/cql6cz/ofesua
-- https://www.zhihu.com/search?q=conda&type=content
+- https://zhuanlan.zhihu.com/p/646308657
 - https://blog.csdn.net/maliang_1993/article/details/80955039
 - https://www.jianshu.com/p/eb07ba0cd2fc
 - https://juejin.cn/post/7301907369905864741
