@@ -53,19 +53,35 @@
     }
 
     function handleClick(e) {
-        let url = '';
+      let url = '';
         let processedUrl = '';
-        let target = e.target;
-        while (target && !url && target !== document.body) {
-            if (target.href) {
-                url = target.href;
+        // 检查点击的元素是否具有 href 属性
+        if (e.target && e.target.href) {
+            url = e.target.href;
+            processedUrl = processUrl(url);
+            if (processedUrl) {
+                e.preventDefault();
+                window.open(processedUrl, '_blank');
             }
-            target = target.parentElement;
         }
-        processedUrl = url ? processUrl(url) : null;
-        if (processedUrl) {
-            e.preventDefault();
-            window.open(processedUrl, '_blank');
+
+        // 如果点击的元素没有 href 属性，则检查其父元素
+        else if (e.target.parentElement && e.target.parentElement.href) {
+            url = e.target.parentElement.href;
+            processedUrl = processUrl(url);
+            if (processedUrl) {
+                e.preventDefault();
+                window.open(processedUrl, '_blank');
+            }
+        }
+        // 如果点击的元素或其父元素都没有 href 属性，则检查其祖先元素
+        else if (e.target.parentElement && e.target.parentElement.parentElement && e.target.parentElement.parentElement.href) {
+            url = e.target.parentElement.parentElement.href;
+            processedUrl = processUrl(url);
+            if (processedUrl) {
+                e.preventDefault();
+                window.open(processedUrl, '_blank');
+            }
         }
     }
 
