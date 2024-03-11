@@ -17,3 +17,10 @@
 - https://blog.csdn.net/maliang_1993/article/details/80955039
 - https://www.jianshu.com/p/eb07ba0cd2fc
 - https://juejin.cn/post/7301907369905864741
+- https://support.qq.com/embed/phone/322047/link-jump?jump=https://www.huawei.com/cn/corporate-information
+- https://c.pc.qq.com/middlem.html?pfurl=https://www.huawei.com/cn/corporate-information
+- https://app.yinxiang.com/OutboundRedirect.action?dest=https://www.huawei.com/cn/corporate-information
+- https://www.youtube.com/redirect?q=https://www.huawei.com/cn/corporate-information
+- https://developers.weixin.qq.com/community/middlepage/href?href=https://www.huawei.com/cn/corporate-information
+- http://www.pc6.com/goread.html?gourl=https://www.huawei.com/cn/corporate-information
+- https://blog.51cto.com/transfer?https://www.huawei.com/cn/corporate-information
