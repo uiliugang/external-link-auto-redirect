@@ -4,7 +4,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  redirect to the real URL directly when clicking on a link that contains a redirect URL
-// @description:zh-CN  点击包含重定向 URL 的链接时，直接重定向到真实的 URL
+// @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL
 // @author       uiliugang
 // @run-at       document-start
 // @match        *://*/*
