@@ -2,7 +2,7 @@
 // @name         External Link Auto Redirect(Direct Link)
 // @name:zh-CN   外链自动重定向（默认直链）
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  redirect to the real URL directly when clicking on a link that contains a redirect URL
 // @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL
 // @author       uiliugang
@@ -20,6 +20,10 @@
     const excludedExtensions = ['.m3u8', '.flv', '.ts'];
 
     function processUrl(redirectURL) {
+        // 登录页面，不做处理
+        if (redirectURL.includes('login')) {
+            return null;
+        }
         const matches = redirectURL.match(redirectRegex);
         console.log(`Matches: ${matches}`);
         if (matches) {
