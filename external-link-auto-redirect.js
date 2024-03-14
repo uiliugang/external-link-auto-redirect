@@ -2,7 +2,7 @@
 // @name         External Link Auto Redirect(Direct Link)
 // @name:zh-CN   外链自动重定向（默认直链）
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.3.1
 // @description  redirect to the real URL directly when clicking on a link that contains a redirect URL
 // @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL
 // @author       uiliugang
@@ -17,13 +17,9 @@
     'use strict';
 
     const redirectRegex = /^https?:\/\/.*\?.*https?/;
-    const excludedExtensions = ['.m3u8', '.flv', '.ts'];
+    const excludedKeyWords = ['.m3u8', '.flv', '.ts', 'login','sign','auth','logout','register','logout','download','upload','share','video','player','play','watch','stream','live','embed','api','callback', 'token'];
 
     function processUrl(redirectURL) {
-        // 登录页面，不做处理
-        if (redirectURL.includes('login')) {
-            return null;
-        }
         const matches = redirectURL.match(redirectRegex);
         console.log(`Matches: ${matches}`);
         if (matches) {
@@ -41,7 +37,7 @@
         try {
             const url = new URL(string);
             const pathname = url.pathname;
-            for (const ext of excludedExtensions) {
+            for (const ext of excludedKeyWords) {
                 if (pathname.includes(ext)) {
                     return false;
                 }
