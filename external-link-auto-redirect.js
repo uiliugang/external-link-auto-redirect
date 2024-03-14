@@ -17,7 +17,7 @@
     'use strict';
 
     const redirectRegex = /^https?:\/\/.*\?.*https?/;
-    const excludedKeyWords = ['.m3u8', '.flv', '.ts', 'login','sign','auth','logout','register','logout','download','upload','share','video','player','play','watch','stream','live','embed','api','callback', 'token'];
+    const excludedKeyWords = ['.m3u8', '.flv', '.ts', 'login','sign','auth','logout','register','logout','download','upload','share','video','play','watch','stream','live','embed','api','callback', 'token'];
 
     function processUrl(redirectURL) {
         const matches = redirectURL.match(redirectRegex);
