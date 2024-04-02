@@ -2,7 +2,7 @@
 // @name         External Link Auto Redirect
 // @name:zh-CN   外链自动重定向
 // @namespace    http://tampermonkey.net/
-// @version      1.3.4
+// @version      1.3.5
 // @description  redirect to the real URL directly when clicking on a link that contains a redirect URL
 // @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL
 // @author       uiliugang
@@ -17,7 +17,7 @@
     'use strict';
 
     const httpPattern = /http/g;
-    const firstHttpExcludeWords = ['portal', 'token', 'sorry', 'qrcode', 'account', 'login', 'sign', 'auth', 'logout', 'register', 'upload', 'share', 'video', 'player', 'play', 'watch', 'stream', 'live', 'api', 'callback'];
+    const firstHttpExcludeWords = ['portal','proxy','player','vpn','search','api','convert','sorry', 'qrcode', 'account', 'login', 'sign', 'auth', 'logout', 'register', 'upload', 'share', 'live', 'watch'];
     const secondHttpExcludeWords = ['.m3u8', '.flv', '.ts']
 
 
