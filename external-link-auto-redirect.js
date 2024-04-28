@@ -2,9 +2,9 @@
 // @name         External Link Auto Redirect
 // @name:zh-CN   外链自动重定向
 // @namespace    http://tampermonkey.net/
-// @version      1.4.0
-// @description  redirect to the real URL directly when clicking on a link that contains a redirect URL. Please manually add this site to balcklist when entering the redirect page the first time 
-// @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL,首次进入跳转页面，请手动添加此站点到黑名单
+// @version      1.4.1
+// @description  redirect to the real URL directly when clicking on a link that contains a redirect URL. Please manually add this site when entering the redirect page the first time 
+// @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL,首次进入跳转页面，请手动添加此站点
 // @author       uiliugang
 // @run-at       document-start
 // @match        *://*/*
@@ -22,6 +22,8 @@
 
     const httpPattern = /http/g;
     const domain = window.location.hostname;
+    const firstHttpExcludeWords = ['portal','proxy','player','vpn','search','api','convert','sorry', 'qrcode', 'aptcha', 'account', 'login', 'sign', 'auth', 'logout', 'register', 'upload', 'share', 'live', 'watch'];
+    const secondHttpExcludeWords = ['.m3u8', '.flv', '.ts']
     const isChinese = checkLocalChineseLanguage();
     insertMenu();
 
@@ -35,7 +37,7 @@
         const addDomain = ` ${isChinese ? "启用: "+ domain: "Enabled: "+ domain}`;
         const deleteDomain = ` ${isChinese ? "关闭: "+ domain: "Disabled: "+ domain}`;
         GM_registerMenuCommand(addDomain, function() {
-            GM_setValue(domain, null);
+            GM_setValue(domain, "1");
         });
         GM_registerMenuCommand(deleteDomain, function() {
             GM_deleteValue(domain);
@@ -43,18 +45,35 @@
     }
 
     function isAllowedWebsites(domain){
-        if (GM_getValue(domain, "exist")=="exist") {
-            return false;
+        if (GM_getValue(domain, null)=="1") {
+            return true;
         }
-        return true;
+        return false;
     }
 
     function parseUrl(redirectURL) {
         let index = findSecondHttpPosition(redirectURL);
         if (index !== -1) {
             let realUrl = redirectURL.substring(index);
-            realUrl = decodeURIComponent(realUrl);
+            let firstHttp = redirectURL.substring(0, index).toLowerCase();
+            let secondHttp = realUrl.toLowerCase();
 
+            for (const ext of firstHttpExcludeWords) {
+                if (firstHttp.includes(ext)) {
+                    console.log(`firstHttpExcludeWord: ${ext}`);
+                    return null;
+                }
+            }
+
+            for (const ext of secondHttpExcludeWords) {
+                if (secondHttp.includes(ext)) {
+                    console.log(`secondHttpExcludeWord: ${ext}`);
+                    return null;
+                }
+            }
+
+            realUrl = decodeURIComponent(realUrl);
+            
             if (isValidUrl(realUrl)) {
                 return realUrl;
             }
