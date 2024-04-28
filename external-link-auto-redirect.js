@@ -3,8 +3,8 @@
 // @name:zh-CN   外链自动重定向
 // @namespace    http://tampermonkey.net/
 // @version      1.4.0
-// @description  redirect to the real URL directly when clicking on a link that contains a redirect URL. Please manually add this site when entering the redirect page the first time 
-// @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL,首次进入跳转页面，请手动添加此站点
+// @description  redirect to the real URL directly when clicking on a link that contains a redirect URL. Please manually add this site to balcklist when entering the redirect page the first time 
+// @description:zh-CN  点击包含重定向 URL 的链接时，直接跳转到到真实的 URL,首次进入跳转页面，请手动添加此站点到黑名单
 // @author       uiliugang
 // @run-at       document-start
 // @match        *://*/*
